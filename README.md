@@ -23,7 +23,7 @@ A RESTful API for managing library operations including book management, user au
 
 ## Technology Stack
 
-- **Backend**: Django 4.2
+- **Backend**: Django 5.0
 - **Database**: Postgrsql
 - **Authentication**: JWT (JSON Web Tokens)
 - **API**: Django REST Framework

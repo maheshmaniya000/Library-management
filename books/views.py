@@ -1,3 +1,4 @@
+from library_app import permissions
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
@@ -121,4 +122,25 @@ class ReturnBookAPIView(APIView):
             code="book_returned",
             message="Book returned successfully",
             status_code=status.HTTP_200_OK
+        )
+
+class BookSearchAPIView(APIView):
+    permission_classes = [AllowAny]
+    def get(self, request):
+        title = request.query_params.get("title")
+
+        if not title:
+            return wrap_response(
+                success=False,
+                code="title_required",
+                message="title query param is required"
+            )
+
+        books = Book.objects.filter(title__icontains=title, availability=True)
+        serializer = BookSerializer(books, many=True)
+        return wrap_response(
+            success=True,
+            code = "books_retrieved",
+            message="Books retrieved successfully",
+            data=serializer.data
         )

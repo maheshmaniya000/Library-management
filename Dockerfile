@@ -26,10 +26,10 @@ RUN pip install -r requirements.txt
 COPY . /app/
 
 # Collect static files
-RUN python manage.py collectstatic --noinput || true
+# RUN python manage.py collectstatic --noinput || true
 
 # Expose port
 EXPOSE 8000
 
 # Run migrations and start server
-CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+CMD ["sh", "-c", "python manage.py migrate && python manage.py collectstatic --noinput && python manage.py runserver 0.0.0.0:8000"]
